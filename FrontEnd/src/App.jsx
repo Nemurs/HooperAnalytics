@@ -11,7 +11,7 @@ function App() {
         </a>
       </div>
       <h1>Hooper Analytics</h1>
-      <p className="read-the-docs">
+      <p className="under-construction">
         🚧 Site Under Construction 🚧
       </p>
     </>
