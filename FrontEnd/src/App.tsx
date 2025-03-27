@@ -6,10 +6,15 @@ import logo from "./logo.svg"
 const App = () => {
   return (
     <div className="App">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h1>
-        🚧 Site Under Construction 🚧
+      <h1 className="App-title">
+        Hooper Analytics
       </h1>
+      <a href="https://github.com/Nemurs/HooperAnalytics">
+        <img src={logo} className="App-logo" alt="logo" />
+      </a>
+      <h2 className="under-construction">
+        🚧 Site Under Construction 🚧
+      </h2>
       {/* <header className="App-header">
         <Counter />
         <Quotes />
