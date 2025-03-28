@@ -15,7 +15,7 @@ builder.Services.AddOpenApi();
 // 1) define a unique string
 string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-// 2) define allowed domains, in this case "http://example.com" and "*" = all
+// 2) define allowed domains, in this case "http://hooperanalytics.com" and "*" = all
 //    domains, for testing purposes only.
 builder.Services.AddCors(options =>
 {
@@ -49,6 +49,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "HooperAnalytics API V1 \n Documentation:");
 
 app.Run();

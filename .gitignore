@@ -23,6 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
+# Debug directories and files
+BackEnd/bin/Debug
+BackEnd/obj/Debug
+
 #ENV Files
 .env
 .env*
