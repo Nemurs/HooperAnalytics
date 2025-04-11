@@ -1,4 +1,6 @@
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using BackEnd.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +25,9 @@ builder.Services.AddCors(options =>
       builder =>
       {
           builder.WithOrigins(
-            "http://hooperanalytics.com", "*");
+            "http://localhost:3000/", "https://hooperanalytics.com")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
       });
 });
 
@@ -49,6 +53,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/", () => "Hooper Analytics API V1 \n Documentation:");
+app.MapGet("/api", () => "Hooper Analytics API V1 \n Documentation: https://github.com/Nemurs/HooperAnalytics" );
+
+app.MapGet("/api/test", () => "api test is good!");
 
 app.Run();

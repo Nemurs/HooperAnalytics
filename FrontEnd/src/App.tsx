@@ -3,6 +3,8 @@ import "./App.css"
 // import { Quotes } from "./features/quotes/Quotes"
 import logo from "./logo.svg"
 
+console.log(fetch(`/api/test`).then((response)=>response.json()).then(data => data))
+
 const App = () => {
   return (
     <div className="App">
