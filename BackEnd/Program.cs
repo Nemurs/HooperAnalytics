@@ -10,26 +10,26 @@ builder.Services.AddSwaggerGen(c =>
 {
      c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hooper Analytics API", Description = "Advanced Basketball Data Analytics for Everyone", Version = "v1" });
 });
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddOpenApi();
 
-// 1) define a unique string
+//Define a unique string for Cors Policy
 string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-// 2) define allowed domains, in this case "http://hooperanalytics.com" and "*" = all
-//    domains, for testing purposes only.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
       builder =>
       {
           builder.WithOrigins(
-            "http://localhost:3000/", "https://hooperanalytics.com")
+            "http://localhost:3000",
+            "https://www.hooperanalytics.com")
             .AllowAnyHeader()
             .AllowAnyMethod();
       });
 });
+
+builder.Services.AddControllers();
 
 //Build
 var app = builder.Build();
@@ -45,16 +45,16 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseCors(MyAllowSpecificOrigins);
-
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/api", () => "Hooper Analytics API V1 \n Documentation: https://github.com/Nemurs/HooperAnalytics" );
+app.MapGet("/api", () => "Hooper Analytics API V1 \n Documentation: https://github.com/Nemurs/HooperAnalytics").RequireCors(MyAllowSpecificOrigins);
 
-app.MapGet("/api/test", () => "api test is good!");
+app.MapGet("/api/test", () => new { Message = "api test is good!" }).RequireCors(MyAllowSpecificOrigins);
 
 app.Run();
