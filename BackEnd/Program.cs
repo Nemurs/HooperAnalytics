@@ -1,6 +1,9 @@
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using BackEnd.Data;
+using Microsoft.AspNetCore.Identity;
+using AspNetCore.Identity.Extensions;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +34,17 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 
+//Auth Services
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddCookie(IdentityConstants.ApplicationScheme)
+    .AddBearerToken(IdentityConstants.BearerScheme);
+builder.Services.AddIdentityCore<User>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddApiEndpoints();
+
+//EF Framework Service
+builder.Services.AddDbContext<AppDbContext>();
+
 //Build
 var app = builder.Build();
 
@@ -43,6 +57,7 @@ if (app.Environment.IsDevelopment())
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hooper Analytics API V1");
     });
+    app.ApplyMigrations();
 }
 
 app.UseHttpsRedirection();
@@ -51,10 +66,20 @@ app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
+app.MapIdentityApi<User>();
+
 app.MapControllers();
 
 app.MapGet("/api", () => "Hooper Analytics API V1 \n Documentation: https://github.com/Nemurs/HooperAnalytics").RequireCors(MyAllowSpecificOrigins);
 
 app.MapGet("/api/test", () => new { Message = "api test is good!" }).RequireCors(MyAllowSpecificOrigins);
+
+// app.MapGet("/authTEST", () => new { Message = "auth test is good!" }).RequireCors(MyAllowSpecificOrigins).RequireAuthorization();
+
+app.MapGet("/authTEST", async (ClaimsPrincipal claims, AppDbContext context) =>
+{
+    string userId = claims.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+    return await context.Users.FindAsync(userId);
+    }).RequireCors(MyAllowSpecificOrigins).RequireAuthorization();
 
 app.Run();

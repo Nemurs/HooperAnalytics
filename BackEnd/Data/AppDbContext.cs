@@ -1,17 +1,17 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using DotNetEnv;
 
 namespace BackEnd.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext
     {
-        protected readonly IConfiguration Configuration;
 
-        public AppDbContext(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            :base(options){
+
+            }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
@@ -20,6 +20,12 @@ namespace BackEnd.Data
             options.UseNpgsql(System.Environment.GetEnvironmentVariable("DB__CONNECTION__STRING"));
         }
 
-        public DbSet<User> Users { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
+       new public DbSet<User> Users { get; set; }
+
     }
 }

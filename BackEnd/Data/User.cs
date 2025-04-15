@@ -1,10 +1,9 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace BackEnd.Data
 {
-    public class User
+    public class User : IdentityUser
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string Tier {get; set; }
-    }
+        public int Tier {get; set;}
+   }
 }
