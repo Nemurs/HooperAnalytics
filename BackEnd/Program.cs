@@ -22,7 +22,7 @@ builder.Services.AddCors(options =>
       builder =>
       {
           builder.WithOrigins(
-            "http://localhost:3000",
+            "https://localhost:3000",
             "https://www.hooperanalytics.com")
             .AllowAnyHeader()
             .AllowAnyMethod();
