@@ -18,3 +18,17 @@
 .under-construction {
   color: #888;
 }
+
+.black-round-button{
+  background-color: rgb(15, 15, 15);
+  border-color: rgb(15, 15, 15);;
+  border-radius: 1em;
+  border-style: solid;
+}
+.black-round-button:hover{
+  cursor: pointer;
+}
+
+.black-round-button-text{
+  color: #ff6464;
+}

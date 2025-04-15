@@ -2,6 +2,7 @@ import "./App.css"
 // import { Counter } from "./features/counter/Counter"
 // import { Quotes } from "./features/quotes/Quotes"
 import logo from "./logo.svg"
+import {Link} from "react-router"
 
 const App = () => {
   return (
@@ -15,6 +16,11 @@ const App = () => {
       <h2 className="under-construction">
         🚧 Site Under Construction 🚧
       </h2>
+      <Link to="/test">
+        <button className="black-round-button">
+          <p className="black-round-button-text">Route Test</p>
+        </button>
+      </Link>
       {/* <header className="App-header">
         <Counter />
         <Quotes />
